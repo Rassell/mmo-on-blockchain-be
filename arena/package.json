@@ -1,0 +1,19 @@
+{
+  "name": "mmobe-arena",
+  "version": "1.0.0",
+  "description": "functions related to enter the arena",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "author": "Gonzalo Soriano <sordesos@gmail.com>",
+  "license": "GNU",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "rootDir": ".",
+    "outDir": "./dist",
+    "declarationMap": false,
+    "declaration": false,
+    "esModuleInterop": true
+  },
+  "include": ["index.ts"],
+  "exclude": ["./**/*.test.ts"]
+}
