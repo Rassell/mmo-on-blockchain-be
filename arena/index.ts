@@ -1,6 +1,6 @@
-import { http } from "@google-cloud/functions-framework";
+import { http } from '@google-cloud/functions-framework';
 
 // HTTP Cloud Function.
-http("helloHttp", (req, res) => {
+http('helloHttp', (req, res) => {
   res.send(`Hello world!`);
 });
