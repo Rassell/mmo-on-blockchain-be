@@ -11,18 +11,37 @@ terraform {
   }
 }
 
+resource "google_storage_bucket" "bucket" {
+  name     = "mmo-on-blockchain-bucket"
+  location = "EU"
+}
+
+data "archive_file" "dummy" {
+  type        = "zip"
+  output_path = "${path.module}/lambda_function_payload.zip"
+
+  source {
+    content  = "hello"
+    filename = "dummy.txt"
+  }
+}
+
+resource "google_storage_bucket_object" "archive" {
+  name   = data.archive_file.dummy.output_name
+  bucket = google_storage_bucket.bucket.name
+  source = data.archive_file.dummy.output_path
+}
+
 resource "google_cloudfunctions_function" "function" {
   name        = "func-arena"
   description = "My function"
   runtime     = "nodejs16"
 
   available_memory_mb   = 128
+  source_archive_bucket = google_storage_bucket.bucket.name
+  source_archive_object = google_storage_bucket_object.archive.name
   trigger_http          = true
   entry_point           = "helloHttp"
-
-  source_repository {
-    url = "https://github.com/Rassell/mmo-on-blockchain-be/tree/main/functions/arena"
-  }
 }
 
 # IAM entry for all users to invoke the function
