@@ -19,6 +19,10 @@ resource "google_cloudfunctions_function" "function" {
   available_memory_mb   = 128
   trigger_http          = true
   entry_point           = "helloHttp"
+
+  source_repository = {
+    url = "https://github.com/Rassell/mmo-on-blockchain-be/tree/main/functions/arena"
+  }
 }
 
 # IAM entry for all users to invoke the function
