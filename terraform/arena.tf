@@ -20,7 +20,7 @@ resource "google_cloudfunctions_function" "function" {
   trigger_http          = true
   entry_point           = "helloHttp"
 
-  source_repository = {
+  source_repository {
     url = "https://github.com/Rassell/mmo-on-blockchain-be/tree/main/functions/arena"
   }
 }
