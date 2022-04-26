@@ -12,8 +12,8 @@ terraform {
 }
 
 resource "google_storage_bucket" "bucket" {
-  name     = "test-bucket"
-  location = "US"
+  name     = "mmo-on-blockchain-bucket"
+  location = "EU"
 }
 
 resource "google_storage_bucket_object" "archive" {
