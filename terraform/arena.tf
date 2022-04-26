@@ -21,8 +21,8 @@ data "archive_file" "dummy" {
   output_path = "${path.module}/dummy-func-arena.zip"
 
   source {
-    content  = "hello"
-    filename = "dummy.txt"
+    content  = "(function () { return 'hello world'; })();"
+    filename = "function.js"
   }
 }
 
