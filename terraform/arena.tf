@@ -16,31 +16,21 @@ resource "google_storage_bucket" "bucket" {
   location = "EU"
 }
 
-data "archive_file" "dummy" {
-  type        = "zip"
-  output_path = "${path.module}/dummy-func-arena.zip"
-
-  source {
-    content  = "(function () { return 'hello world'; })();"
-    filename = "function.js"
-  }
-}
-
 resource "google_storage_bucket_object" "archive" {
-  name   = "dummy-func-arena.zip"
+  name   = "dummy-func-arena_2.zip"
   bucket = google_storage_bucket.bucket.name
-  source = data.archive_file.dummy.output_path
+  source = "./dummy-func-arena_2.zip"
 }
 
 resource "google_cloudfunctions_function" "function" {
-  name        = "func-arena"
-  description = "My function"
-  runtime     = "nodejs16"
+  name    = "func-arena"
+  runtime = "nodejs16"
 
   available_memory_mb   = 128
   source_archive_bucket = google_storage_bucket.bucket.name
   source_archive_object = google_storage_bucket_object.archive.name
   trigger_http          = true
+  entry_point           = "helloHttp"
 }
 
 # IAM entry for all users to invoke the function
