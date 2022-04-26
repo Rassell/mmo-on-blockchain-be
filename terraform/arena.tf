@@ -18,7 +18,7 @@ resource "google_storage_bucket" "bucket" {
 
 data "archive_file" "dummy" {
   type        = "zip"
-  output_path = "${path.module}/lambda_function_payload.zip"
+  output_path = "${path.module}/dummy-func-arena.zip"
 
   source {
     content  = "hello"
@@ -27,7 +27,7 @@ data "archive_file" "dummy" {
 }
 
 resource "google_storage_bucket_object" "archive" {
-  name   = data.archive_file.dummy.output_name
+  name   = "dummy-func-arena.zip"
   bucket = google_storage_bucket.bucket.name
   source = data.archive_file.dummy.output_path
 }
