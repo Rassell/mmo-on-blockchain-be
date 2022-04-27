@@ -7,12 +7,16 @@
     "tsc": "tsc",
     "lint": "eslint --ext .ts",
     "test": "jest",
+    "build:dev": "cross-env NODE_ENV=development node esbuild.js",
     "build": "node esbuild.js"
   },
   "author": "Gonzalo Soriano <sordesos@gmail.com>",
   "license": "GNU",
   "dependencies": {
-    "@google-cloud/functions-framework": "^3.1.0"
+    "@alch/alchemy-web3": "^1.4.2",
+    "@google-cloud/functions-framework": "^3.1.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
