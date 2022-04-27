@@ -37,4 +37,4 @@ jobs:
 
       - name: Deploy cloud function
         working-directory: ./functions/arena/dist
-        run: gcloud functions deploy helloHttp --runtime nodejs16 --trigger-http --allow-unauthenticated
+        run: gcloud functions deploy func-arena --runtime nodejs16 --trigger-http --memory 128MB --entry-point helloHttp
