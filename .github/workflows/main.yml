@@ -27,10 +27,13 @@ jobs:
       - name: Build
         run: npm run build
 
+      - id: Setup GCP Auth
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
       - name: Setup GCP Service Account
         uses: google-github-actions/setup-gcloud@v0
-        with:
-          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - name: deploy cloud function
         uses: google-github-actions/deploy-cloud-functions@v0
