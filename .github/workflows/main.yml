@@ -30,16 +30,15 @@ jobs:
       - name: Setup GCP Auth
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+          credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
 
       - name: Setup GCP Service Account
         uses: google-github-actions/setup-gcloud@v0
 
-      - name: deploy cloud function
-        uses: google-github-actions/deploy-cloud-functions@v0
-        with:
-          path: dist
-          name: helloHttp
-          runtime: nodejs16
-          project_id: mmo-on-blockchain
-          entry_point: helloHttp
+      - name: Deploy cloud function
+        working-directory: ./functions/arena/dist
+        run: gcloud functions deploy helloHttp \
+          --runtime nodejs10 \
+          --trigger-http \
+          --memory 128MB \
+          --entry-point helloHttp
