@@ -1,51 +1,42 @@
-name: 'Terraform'
+name: "Terraform"
 
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
 
 permissions:
   contents: read
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  build:
+    name: "deploy"
     runs-on: ubuntu-latest
-    environment: production
-
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-        working-directory: ./terraform
-
+        working-directory: ./functions/arena
     steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install dependencies
+        run: npm i
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+      - name: Build
+        run: npm run build
 
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: terraform init
-      env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      - name: Setup GCP Service Account
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan -input=false
-      env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-
-      # On push to main, build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
-      env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      - name: deploy cloud function
+        uses: google-github-actions/deploy-cloud-functions@v0
+        with:
+          path: dist
+          name: helloHttp
+          runtime: nodejs16
+          project_id: mmo-on-blockchain
+          entry_point: helloHttp
