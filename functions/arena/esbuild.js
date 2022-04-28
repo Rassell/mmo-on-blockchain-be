@@ -2,9 +2,10 @@
 const { build } = require('esbuild');
 
 build({
-  entryPoints: ['index.ts'],
+  entryPoints: ['src/index.ts'],
   bundle: true,
   outfile: 'dist/index.js',
   platform: 'node',
   external: ['electron'],
+  minify: true,
 }).catch(() => process.exit(1));
