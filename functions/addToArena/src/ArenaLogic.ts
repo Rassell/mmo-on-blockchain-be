@@ -22,7 +22,7 @@ export async function assignUserToArena(user: string, championId: number) {
       success = false;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     success = false;
   }
 

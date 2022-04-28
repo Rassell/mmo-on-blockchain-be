@@ -11,5 +11,10 @@ const rosterContract = new web3.eth.Contract(
 );
 
 export async function getUserRoster(address: string): Promise<any[]> {
-  return await rosterContract.methods.getUserRoster(address).call();
+  try {    
+    return await rosterContract.methods.getUserRoster(address).call();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
