@@ -16,7 +16,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./functions/arena
+        working-directory: ./functions/addToArena
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -39,5 +39,5 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
 
       - name: Deploy cloud function
-        working-directory: ./functions/arena/dist
-        run: gcloud functions deploy func-arena --allow-unauthenticated --region europe-west1 --runtime nodejs16 --trigger-http --memory 128MB --entry-point helloHttp
+        working-directory: ./functions/addToArena/dist
+        run: gcloud functions deploy addToArena --allow-unauthenticated --region europe-west1 --runtime nodejs16 --trigger-http --memory 128MB --entry-point addToArena
