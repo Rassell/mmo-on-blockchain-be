@@ -7,5 +7,4 @@ build({
   outfile: 'dist/index.js',
   platform: 'node',
   external: ['electron'],
-  minify: true,
 }).catch(() => process.exit(1));

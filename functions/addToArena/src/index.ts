@@ -1,8 +1,3 @@
-if (process.env.NODE_ENV !== 'production') {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  require('dotenv').config();
-}
-
 import { Request, Response } from '@google-cloud/functions-framework';
 
 import { assignUserToArena } from './ArenaLogic';
